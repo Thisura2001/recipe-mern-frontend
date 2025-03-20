@@ -21,7 +21,7 @@ export const NavBar: React.FC = () => {
                         <span className="hidden sm:inline">Home</span>
                     </Link>
                     <Link
-                        to="/favorites"
+                        to="/favorite"
                         className={`flex items-center gap-2 px-3 py-2 rounded-md ${location.pathname === '/favorites' ? 'bg-orange-100 text-orange-600' : 'text-gray-600 hover:bg-gray-100'}`}
                     >
                         <HeartIcon size={20} />
