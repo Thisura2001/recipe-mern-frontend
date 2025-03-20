@@ -22,7 +22,7 @@ export const NavBar: React.FC = () => {
                     </Link>
                     <Link
                         to="/favorite"
-                        className={`flex items-center gap-2 px-3 py-2 rounded-md ${location.pathname === '/favorites' ? 'bg-orange-100 text-orange-600' : 'text-gray-600 hover:bg-gray-100'}`}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-md ${location.pathname === '/favorite' ? 'bg-orange-100 text-orange-600' : 'text-gray-600 hover:bg-gray-100'}`}
                     >
                         <HeartIcon size={20} />
                         <span className="hidden sm:inline">Favorites</span>
