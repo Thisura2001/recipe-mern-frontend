@@ -21,7 +21,6 @@ export const searchMeals = async (query: string): Promise<Recipe[]> => {
 export const getRandomMeals = async (): Promise<Recipe[]> => {
     try {
         const meals = [];
-        // Fetch 6 random meals
         for (let i = 0; i < 6; i++) {
             const response = await axios.get(`${API_BASE_URL}/random.php`);
             const meal = response.data.meals[0];
