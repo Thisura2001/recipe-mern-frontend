@@ -91,7 +91,7 @@ export const HomePage: React.FC = () => {
                                 key={recipe.id}
                                 recipe={recipe}
                                 isFavorite={isFavorite(recipe)}
-                                toggleFavorite={toggleFavorite}a
+                                toggleFavorite={toggleFavorite}
                             />
                         ))}
                     </div>
