@@ -3,10 +3,11 @@ import { Loader2Icon } from 'lucide-react'
 import {Recipe} from "../Model/RecipeModel.ts";
 import {getFavorites, saveFavorites} from "../Utils/localStoreage.ts";
 import {getRandomMeals, searchMeals} from "../Utils/api.ts";
-import {toast} from "react-toastify";
-import {Toaster} from "react-hot-toast";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {SearchBar} from "../Component/SeachBar.tsx";
 import {RecipeCard} from "../Component/RecipeCard.tsx";
+
 export const HomePage: React.FC = () => {
     const [recipes, setRecipes] = useState<Recipe[]>([])
     const [favorites, setFavorites] = useState<Recipe[]>(getFavorites())
@@ -64,7 +65,7 @@ export const HomePage: React.FC = () => {
     }
     return (
         <div className="min-h-screen bg-gray-50 pb-10">
-            <Toaster position="top-center" />
+            <ToastContainer position="top-center" />
             <div className="pt-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
                 <div className="text-center mb-8">
                     <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
