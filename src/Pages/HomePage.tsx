@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Loader2Icon } from 'lucide-react';
 import { Recipe } from "../Model/RecipeModel.ts";
 import { getRandomMeals, searchMeals } from "../Utils/api.ts";
-import { ToastContainer, toast } from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { SearchBar } from "../Component/SeachBar.tsx";
 import { RecipeCard } from "../Component/RecipeCard.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../Store/Store.ts";
-import { deleteMeal, getAllMeal, saveMeal } from "../Reducer/MealSlice.ts";
+import { saveMeal } from "../Reducer/MealSlice.ts";
 
 export const HomePage: React.FC = () => {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -16,7 +16,7 @@ export const HomePage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     const dispatch = useDispatch<AppDispatch>();
-    const meals = useSelector(state => state.meals); // Access meals from Redux store
+    const meals = useSelector(state => state.meals);
 
     useEffect(() => {
         loadInitialRecipes();
@@ -54,9 +54,15 @@ export const HomePage: React.FC = () => {
             setIsLoading(false);
         }
     };
-
+    //save recipe
     const toggleFavorite = (recipe: Recipe) => {
-        dispatch(saveMeal(recipe));  // Pass the actual recipe object here
+        dispatch(saveMeal(recipe))
+            .then(()=>{
+                toast.success('Recipe added to favorites.');
+            }).catch(err=>{
+                console.log(err);
+                toast.error('Failed to load recipes. Please try again.');
+        })
     };
 
     return (
@@ -86,7 +92,7 @@ export const HomePage: React.FC = () => {
                             <RecipeCard
                                 key={recipe.id}
                                 recipe={recipe}
-                                isFavorite={true}
+                                isFavorite={false}
                                 toggleFavorite={() => toggleFavorite(recipe)}  // Pass the actual recipe here
                             />
                         ))}
