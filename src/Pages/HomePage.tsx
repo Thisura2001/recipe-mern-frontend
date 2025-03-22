@@ -6,7 +6,7 @@ import {toast, ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { SearchBar } from "../Component/SeachBar.tsx";
 import { RecipeCard } from "../Component/RecipeCard.tsx";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { AppDispatch } from "../Store/Store.ts";
 import { saveMeal } from "../Reducer/MealSlice.ts";
 
@@ -14,9 +14,9 @@ export const HomePage: React.FC = () => {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [favorites, setFavorites] = useState<Set<string>>(new Set());
 
     const dispatch = useDispatch<AppDispatch>();
-    const meals = useSelector(state => state.meals);
 
     useEffect(() => {
         loadInitialRecipes();
@@ -56,6 +56,13 @@ export const HomePage: React.FC = () => {
     };
     //save recipe
     const toggleFavorite = (recipe: Recipe) => {
+        const newFavorites = new Set(favorites);
+        if (newFavorites.has(recipe.id)) {
+            newFavorites.delete(recipe.id);
+        }else {
+            newFavorites.add(recipe.id);
+        }
+        setFavorites(newFavorites);
         dispatch(saveMeal(recipe))
             .then(()=>{
                 toast.success('Recipe added to favorites.');
@@ -92,8 +99,8 @@ export const HomePage: React.FC = () => {
                             <RecipeCard
                                 key={recipe.id}
                                 recipe={recipe}
-                                isFavorite={false}
-                                toggleFavorite={() => toggleFavorite(recipe)}  // Pass the actual recipe here
+                                isFavorite={favorites.has(recipe.id)} //// Pass the correct favorite status
+                                toggleFavorite={() => toggleFavorite(recipe)}
                             />
                         ))}
                     </div>
