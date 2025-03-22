@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import {Recipe} from "../Model/RecipeModel.ts";
-import {getFavorites, saveFavorites} from "../Utils/localStoreage.ts";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {RecipeCard} from "../Component/RecipeCard.tsx";
 export const Favorite: React.FC = () => {
     const [favorites, setFavorites] = useState<Recipe[]>([])
     useEffect(() => {
-        setFavorites(getFavorites())
     }, [])
     const toggleFavorite = (recipe: Recipe) => {
         const newFavorites = favorites.filter((fav) => fav.id !== recipe.id)
         setFavorites(newFavorites)
-        saveFavorites(newFavorites)
         toast.success('Recipe removed from favorites')
     }
     return (

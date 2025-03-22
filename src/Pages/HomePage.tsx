@@ -1,68 +1,64 @@
-import React, { useEffect, useState } from 'react'
-import { Loader2Icon } from 'lucide-react'
-import {Recipe} from "../Model/RecipeModel.ts";
-import {getFavorites, saveFavorites} from "../Utils/localStoreage.ts";
-import {getRandomMeals, searchMeals} from "../Utils/api.ts";
-import { toast, ToastContainer } from "react-toastify";
+import React, { useEffect, useState } from 'react';
+import { Loader2Icon } from 'lucide-react';
+import { Recipe } from "../Model/RecipeModel.ts";
+import { getRandomMeals, searchMeals } from "../Utils/api.ts";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {SearchBar} from "../Component/SeachBar.tsx";
-import {RecipeCard} from "../Component/RecipeCard.tsx";
+import { SearchBar } from "../Component/SeachBar.tsx";
+import { RecipeCard } from "../Component/RecipeCard.tsx";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../Store/Store.ts";
+import { deleteMeal, getAllMeal, saveMeal } from "../Reducer/MealSlice.ts";
 
 export const HomePage: React.FC = () => {
-    const [recipes, setRecipes] = useState<Recipe[]>([])
-    const [favorites, setFavorites] = useState<Recipe[]>(getFavorites())
-    const [isLoading, setIsLoading] = useState(true)
-    const [error, setError] = useState<string | null>(null)
+    const [recipes, setRecipes] = useState<Recipe[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    const dispatch = useDispatch<AppDispatch>();
+    const meals = useSelector(state => state.meals); // Access meals from Redux store
+
     useEffect(() => {
-        loadInitialRecipes()
-    }, [])
+        loadInitialRecipes();
+    }, []);
+
     const loadInitialRecipes = async () => {
         try {
-            setIsLoading(true)
-            setError(null)
-            const randomRecipes = await getRandomMeals()
-            setRecipes(randomRecipes)
+            setIsLoading(true);
+            setError(null);
+            const randomRecipes = await getRandomMeals();
+            setRecipes(randomRecipes);
         } catch (err) {
-            setError('Failed to load recipes. Please try again later.')
+            setError('Failed to load recipes. Please try again later.');
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
-    }
+    };
+
     const handleSearch = async (query: string) => {
         try {
-            setIsLoading(true)
-            setError(null)
+            setIsLoading(true);
+            setError(null);
             if (!query.trim()) {
-                await loadInitialRecipes()
-                return
+                await loadInitialRecipes();
+                return;
             }
-            const searchResults = await searchMeals(query)
-            setRecipes(searchResults)
+            const searchResults = await searchMeals(query);
+            setRecipes(searchResults);
             if (searchResults.length === 0) {
-                setError('No recipes found. Try a different search.')
+                setError('No recipes found. Try a different search.');
             }
         } catch (err) {
-            setError('Failed to search recipes. Please try again.')
+            setError('Failed to search recipes. Please try again.');
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
-    }
+    };
+
     const toggleFavorite = (recipe: Recipe) => {
-        const isFavorite = favorites.some((fav) => fav.id === recipe.id)
-        let newFavorites
-        if (isFavorite) {
-            newFavorites = favorites.filter((fav) => fav.id !== recipe.id)
-            toast.success('Recipe removed from favorites')
-        } else {
-            newFavorites = [...favorites, recipe]
-            toast.success('Recipe added to favorites')
-        }
-        setFavorites(newFavorites)
-        saveFavorites(newFavorites)
-    }
-    const isFavorite = (recipe: Recipe) => {
-        return favorites.some((fav) => fav.id === recipe.id)
-    }
+        dispatch(saveMeal(recipe));  // Pass the actual recipe object here
+    };
+
     return (
         <div className="min-h-screen bg-gray-50 pb-10">
             <ToastContainer position="top-center" />
@@ -72,8 +68,7 @@ export const HomePage: React.FC = () => {
                         Find Your Perfect Recipe
                     </h1>
                     <p className="text-gray-600 max-w-2xl mx-auto">
-                        Search from our collection of delicious recipes from around the
-                        world
+                        Search from our collection of delicious recipes from around the world
                     </p>
                 </div>
                 <SearchBar onSearch={handleSearch} />
@@ -91,13 +86,13 @@ export const HomePage: React.FC = () => {
                             <RecipeCard
                                 key={recipe.id}
                                 recipe={recipe}
-                                isFavorite={isFavorite(recipe)}
-                                toggleFavorite={toggleFavorite}
+                                isFavorite={true}
+                                toggleFavorite={() => toggleFavorite(recipe)}  // Pass the actual recipe here
                             />
                         ))}
                     </div>
                 )}
             </div>
         </div>
-    )
-}
+    );
+};
