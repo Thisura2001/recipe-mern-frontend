@@ -33,7 +33,7 @@ export const getAllMeal = createAsyncThunk(
 )
 export const deleteMeal = createAsyncThunk(
     'meal/deleteMeal',
-    async (id: number) => {
+    async (id:string) => {
         try {
             const response = await api.delete(`/delete/${id}`);
             return response.data;
@@ -55,7 +55,7 @@ const mealSlice = createSlice({
             return action.payload
         })
         builder.addCase(deleteMeal.fulfilled, (state, action) => {
-            return state.filter((meal: Recipe) => meal.name !== action.payload.name);
+            return state.filter((meal) => meal._id !== action.payload._id);
         });
     },
 })

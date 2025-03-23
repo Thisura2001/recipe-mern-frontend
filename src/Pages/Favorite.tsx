@@ -22,7 +22,7 @@ export const Favorite: React.FC = () => {
             });
     }, [dispatch])
     const toggleFavorite = (recipe: Recipe) => {
-       dispatch(deleteMeal(recipe.id))
+       dispatch(deleteMeal(recipe._id))
     }
     return (
         <div className="min-h-screen bg-gray-50 pb-10">
@@ -49,7 +49,7 @@ export const Favorite: React.FC = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {favorites.map((recipe) => (
                             <RecipeCard
-                                key={recipe.id}
+                                key={recipe._id}
                                 recipe={recipe}
                                 isFavorite={true}
                                 toggleFavorite={toggleFavorite}
