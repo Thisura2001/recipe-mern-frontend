@@ -23,6 +23,18 @@ export const Favorite: React.FC = () => {
     }, [dispatch])
     const toggleFavorite = (recipe: Recipe) => {
        dispatch(deleteMeal(recipe._id))
+           .unwrap()
+           .then(async () => {
+               toast.info('Favorite was deleted successfully.');
+               const updatedMeals = await dispatch(getAllMeal())
+                   .unwrap();
+                   setFavorites(updatedMeals);
+                   console.log(recipe);
+           })
+           .catch((error) => {
+               console.log(error);
+               toast.error('Failed to load favorite recipes. Please try again.');
+           })
     }
     return (
         <div className="min-h-screen bg-gray-50 pb-10">
