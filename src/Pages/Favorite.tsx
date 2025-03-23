@@ -3,14 +3,26 @@ import {Recipe} from "../Model/RecipeModel.ts";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {RecipeCard} from "../Component/RecipeCard.tsx";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "../Store/Store.ts";
+import {deleteMeal, getAllMeal} from "../Reducer/MealSlice.ts";
 export const Favorite: React.FC = () => {
     const [favorites, setFavorites] = useState<Recipe[]>([])
+    const dispatch = useDispatch<AppDispatch>();
+
     useEffect(() => {
-    }, [])
+        dispatch(getAllMeal())
+            .unwrap()//Without .unwrap(): Errors are stored inside the action object, and catch() won't work as expected. With .unwrap(): The error is thrown like a normal JavaScript error, making catch(error) work properly.
+            .then((response)=>{
+                setFavorites(response);
+            })
+            .catch((error) => {
+                toast.error('Failed to load favorite recipes. Please try again.');
+                console.error(error);
+            });
+    }, [dispatch])
     const toggleFavorite = (recipe: Recipe) => {
-        const newFavorites = favorites.filter((fav) => fav.id !== recipe.id)
-        setFavorites(newFavorites)
-        toast.success('Recipe removed from favorites')
+       dispatch(deleteMeal(recipe.id))
     }
     return (
         <div className="min-h-screen bg-gray-50 pb-10">

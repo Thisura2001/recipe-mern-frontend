@@ -33,9 +33,9 @@ export const getAllMeal = createAsyncThunk(
 )
 export const deleteMeal = createAsyncThunk(
     'meal/deleteMeal',
-    async (name: string) => {
+    async (id: number) => {
         try {
-            const response = await api.delete(`/delete/${name}`);
+            const response = await api.delete(`/delete/${id}`);
             return response.data;
         } catch (e) {
             console.log("Error deleting Meal ", e);
