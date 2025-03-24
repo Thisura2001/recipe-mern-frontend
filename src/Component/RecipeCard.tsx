@@ -40,7 +40,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({
                     <h3 className="text-lg font-semibold mb-1 text-orange-600">
                         {recipe.name}
                     </h3>
-                    <span className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">
+                    <span className="bg-blue-100 text-gray-600 text-xs px-2 py-1 rounded">
             {recipe.area}
           </span>
                 </div>
