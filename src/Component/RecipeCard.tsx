@@ -66,12 +66,18 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({
                         </div>
                     )}
                 </div>
-                {recipe.source && recipe.source !== 'MealDB' && (
+                {recipe.source && recipe.source !== "MealDB" && (
                     <div className="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-500">
-                        Source: {recipe.source}
+                        <a
+                            href={recipe.source}
+                            target="_blank" // to open link in new page
+                            className="block mt-2 bg-orange-500 text-white text-center py-1 px-3 rounded-md text-sm font-medium hover:bg-orange-600 transition duration-200"
+                        >
+                            About this recipe
+                        </a>
                     </div>
                 )}
             </div>
         </div>
-    )
-}
+    );
+};

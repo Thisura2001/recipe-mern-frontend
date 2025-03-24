@@ -25,7 +25,7 @@ export const Favorite: React.FC = () => {
        dispatch(deleteMeal(recipe._id))
            .unwrap()
            .then(async () => {
-               toast.info('Favorite was deleted successfully.');
+               toast.warn('Favorite was deleted successfully.');
                const updatedMeals = await dispatch(getAllMeal())
                    .unwrap();
                    setFavorites(updatedMeals);
