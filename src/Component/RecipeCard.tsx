@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { HeartIcon, ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
-import {Recipe} from "../Model/RecipeModel.ts";
 import {formatInstructions} from "../Utils/formatInstructions.ts";
+import {Recipe} from "../Model/RecipeModel.ts";
 interface RecipeCardProps {
     recipe: Recipe
     isFavorite: boolean
