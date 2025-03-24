@@ -25,7 +25,7 @@ export const getRandomMeals = async (): Promise<Recipe[]> => {
             const response = await axios.get(`${API_BASE_URL}/random.php`);
             const meal = response.data.meals[0];
             meals.push({
-                id: meal.idMeal,
+                _id: meal.idMeal,
                 name: meal.strMeal,
                 area: meal.strArea,
                 instructions: meal.strInstructions,

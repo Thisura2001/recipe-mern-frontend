@@ -57,10 +57,10 @@ export const HomePage: React.FC = () => {
     //save recipe
     const toggleFavorite = (recipe: Recipe) => {
         const newFavorites = new Set(favorites);
-        if (newFavorites.has(recipe.id)) {
-            newFavorites.delete(recipe.id);
+        if (newFavorites.has(recipe._id)) {
+            newFavorites.delete(recipe._id);
         }else {
-            newFavorites.add(recipe.id);
+            newFavorites.add(recipe._id);
         }
         setFavorites(newFavorites);
         dispatch(saveMeal(recipe))
@@ -97,9 +97,9 @@ export const HomePage: React.FC = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {recipes.map((recipe) => (
                             <RecipeCard
-                                key={recipe.id}
+                                key={recipe._id}
                                 recipe={recipe}
-                                isFavorite={favorites.has(recipe.id)} //// Pass the correct favorite status
+                                isFavorite={favorites.has(recipe._id)} //// Pass the correct favorite status
                                 toggleFavorite={() => toggleFavorite(recipe)}
                             />
                         ))}

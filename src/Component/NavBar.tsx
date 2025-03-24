@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { HomeIcon, HeartIcon } from 'lucide-react'
 export const NavBar: React.FC = () => {
-    const location = useLocation()
+    const location = useLocation() // use to get current url path
     return (
         <nav className="bg-white shadow-md py-4 px-6 w-full">
             <div className="max-w-6xl mx-auto flex justify-between items-center">
