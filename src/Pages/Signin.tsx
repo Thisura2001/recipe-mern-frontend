@@ -1,6 +1,13 @@
 import userIcon from '../assets/user.png';
 import {Mail, RectangleEllipsis} from "lucide-react";
+import { useNavigate } from 'react-router-dom';
+
 export const Signin: React.FC = () => {
+    const navigate = useNavigate();
+    const handleOnclick=()=> {
+        navigate('/Home')
+    }
+
     return (
         <>
             <div className="min-h-screen flex items-center justify-center bg-gray-700">
@@ -33,7 +40,7 @@ export const Signin: React.FC = () => {
                                 className="outline-none flex-1"
                             />
                         </div>
-                        <button className="bg-green-600 text-white p-2 rounded-md hover:bg-green-700 cursor-pointer">
+                        <button className="bg-green-600 text-white p-2 rounded-md hover:bg-green-700 cursor-pointer" onClick={handleOnclick}>
                             Sign in
                         </button>
                         <p className="text-sm text-gray-700">

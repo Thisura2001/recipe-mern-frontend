@@ -14,8 +14,8 @@ export const NavBar: React.FC = () => {
                 </Link>
                 <div className="flex gap-4">
                     <Link
-                        to="/"
-                        className={`flex items-center gap-2 px-3 py-2 rounded-md ${location.pathname === '/' ? 'bg-orange-100 text-orange-600' : 'text-gray-600 hover:bg-gray-100'}`}
+                        to="/Home"
+                        className={`flex items-center gap-2 px-3 py-2 rounded-md ${location.pathname === '/Home' ? 'bg-orange-100 text-orange-600' : 'text-gray-600 hover:bg-gray-100'}`}
                     >
                         <HomeIcon size={20} />
                         <span className="hidden sm:inline">Home</span>
