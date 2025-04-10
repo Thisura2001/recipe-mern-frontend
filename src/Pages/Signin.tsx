@@ -1,16 +1,22 @@
 import userIcon from '../assets/user.png';
 import {Mail, RectangleEllipsis} from "lucide-react";
 import { useNavigate } from 'react-router-dom';
+import React, {useState} from "react";
+import {ToastContainer} from "react-toastify";
 
 export const Signin: React.FC = () => {
     const navigate = useNavigate();
+    const[username,setusername] = useState("");
+    const[password,setpassword] = useState("");
+
     const handleOnclick=()=> {
-        navigate('/Home')
+
     }
 
     return (
         <>
             <div className="min-h-screen flex items-center justify-center bg-gray-700">
+                <ToastContainer position="top-center" />
                 <div className="flex flex-col justify-center items-center gap-6 p-7 md:flex-row md:gap-8 rounded-2xl bg-white shadow-lg">
                     <div className="max-w-sm shadow-2xl rounded-lg">
                         <img

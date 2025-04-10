@@ -1,10 +1,38 @@
 import {Mail, RectangleEllipsis} from "lucide-react";
 import userIcon from '../assets/addUser.png';
+import React, {useState} from "react";
+import {toast, ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Signup: React.FC = () => {
+
+    const[username,setusername] = useState("");
+    const[password,setpassword] = useState("");
+
+    function handleSignup() {
+        if (!username||!password){
+            toast.error("All fields are required");
+            return
+
+        }
+        const users = JSON.parse(localStorage.getItem("user")||"[]");
+
+        const userExists = users.find((user: { username: string; }) => user.username === username);
+        if (userExists){
+            toast.warn("User already exists");
+            console.log("Error")
+        }else {
+            users.push({username: username, password: password});
+            localStorage.setItem("user", JSON.stringify(users));
+            console.log("Success")
+            toast.success("Account created successfully.");
+        }
+    }
+
     return (
         <>
             <div className="min-h-screen flex items-center justify-center bg-gray-700">
+                <ToastContainer position="top-center" />
                 <div className="flex flex-col justify-center items-center gap-6 p-7 md:flex-row md:gap-8 rounded-2xl bg-white shadow-lg">
                     <div className="max-w-sm shadow-2xl rounded-lg">
                         <img
@@ -24,6 +52,7 @@ export const Signup: React.FC = () => {
                                 type="text"
                                 placeholder="Enter username"
                                 className="outline-none flex-1"
+                                onChange={(e) => setusername(e.target.value)}
                             />
                         </div>
                         <div className="flex items-center border border-gray-300 p-2 rounded-md bg-white">
@@ -32,10 +61,13 @@ export const Signup: React.FC = () => {
                                 type="password"
                                 placeholder="Enter password"
                                 className="outline-none flex-1"
+                                onChange={(e) => setpassword(e.target.value)}
                             />
                         </div>
                         <button
-                            className="bg-blue-600 text-white p-2 rounded-md w-100 hover:bg-blue-700 cursor-pointer">
+                            className="bg-blue-600 text-white p-2 rounded-md w-100 hover:bg-blue-700 cursor-pointer"
+                            onClick={handleSignup}
+                        >
                             Create Account
                         </button>
                         <p className="text-sm text-gray-700">
