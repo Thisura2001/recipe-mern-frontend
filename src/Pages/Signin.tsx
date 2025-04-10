@@ -11,7 +11,7 @@ export const Signin: React.FC = () => {
 
     const handleOnclick=()=> {
         const users = JSON.parse(localStorage.getItem("user")||"[]");
-        const matchUser = users.find((user) => user.username === username && user.password === password);
+        const matchUser = users.find((user: { username: string; password: string; }) => user.username === username && user.password === password);
         if (!matchUser){
             toast.error("invalid credentials !");
         }else {
