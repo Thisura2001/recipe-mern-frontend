@@ -2,7 +2,7 @@ import userIcon from '../assets/user.png';
 import {Mail, RectangleEllipsis} from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 import React, {useState} from "react";
-import {ToastContainer} from "react-toastify";
+import {ToastContainer,toast} from "react-toastify";
 
 export const Signin: React.FC = () => {
     const navigate = useNavigate();
@@ -10,7 +10,14 @@ export const Signin: React.FC = () => {
     const[password,setpassword] = useState("");
 
     const handleOnclick=()=> {
-
+        const users = JSON.parse(localStorage.getItem("user")||"[]");
+        const matchUser = users.find((user) => user.username === username && user.password === password);
+        if (!matchUser){
+            toast.error("invalid credentials !");
+        }else {
+            localStorage.setItem("loggingUser",JSON.stringify(matchUser));
+            navigate("/Home");
+        }
     }
 
     return (
@@ -36,6 +43,7 @@ export const Signin: React.FC = () => {
                                 type="text"
                                 placeholder="Enter Username"
                                 className="outline-none flex-1"
+                                onChange={(e) => setusername(e.target.value)}
                             />
                         </div>
                         <div className="flex items-center border border-gray-300 p-2 rounded-md bg-white w-100">
@@ -44,6 +52,7 @@ export const Signin: React.FC = () => {
                                 type="password"
                                 placeholder="Enter Password"
                                 className="outline-none flex-1"
+                                onChange={(e)=>setpassword(e.target.value)}
                             />
                         </div>
                         <button className="bg-green-600 text-white p-2 rounded-md hover:bg-green-700 cursor-pointer" onClick={handleOnclick}>
